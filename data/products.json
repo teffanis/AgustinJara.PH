@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "title": "Colección de Moda",
+    "description": "Hermosas fotografías de productos de moda y accesorios",
+    "code": "PROD-001",
+    "price": 149.99,
+    "status": true,
+    "stock": 50,
+    "category": "🔹#fotoproducto",
+    "thumbnails": ["https://example.com/product-photo.jpg"]
+  },
+  {
+    "id": 2,
+    "title": "Lookbook Primavera",
+    "description": "Colección de fotografías estilo lookbook para catálogos",
+    "code": "LOOK-001",
+    "price": 199.99,
+    "status": true,
+    "stock": 30,
+    "category": "🔹#Lookbooks",
+    "thumbnails": ["https://example.com/lookbook.jpg"]
+  },
+  {
+    "id": 3,
+    "title": "Cobertura de Eventos",
+    "description": "Fotografías profesionales de eventos sociales y corporativos",
+    "code": "EVENT-001",
+    "price": 179.99,
+    "status": true,
+    "stock": 25,
+    "category": "🔹#eventossociales",
+    "thumbnails": ["https://example.com/event-photo.jpg"]
+  }
+]

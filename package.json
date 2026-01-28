@@ -1,0 +1,22 @@
+{
+  "name": "ecommerce-fotografias",
+  "version": "1.0.0",
+  "description": "Servidor ecommerce para venta de fotografías",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "keywords": [
+    "ecommerce",
+    "fotografias"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
