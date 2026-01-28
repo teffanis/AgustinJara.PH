@@ -160,8 +160,4 @@ curl -X POST http://localhost:8080/api/carts/1/product/1 \
 
 ## Autor
 
-Agus Jara PH
-
-## Licencia
-
-ISC
+Ortiz Estefanis 
