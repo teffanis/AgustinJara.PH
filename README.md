@@ -2,34 +2,6 @@
 
 Servidor de ecommerce para la venta de fotografías, desarrollado con Node.js y Express.
 
-## Requisitos
-
-- Node.js v14 o superior
-- npm
-
-## Instalación
-
-```bash
-npm install
-```
-
-## Ejecución
-
-### Modo producción
-```bash
-npm start
-```
-
-### Modo desarrollo (con nodemon)
-```bash
-npm run dev
-```
-
-El servidor escuchará en `http://localhost:8080`
-
-## Estructura del Proyecto
-
-```
 ecommerce-fotografias/
 ├── src/
 │   ├── app.js                 # Archivo principal del servidor
@@ -90,73 +62,6 @@ ecommerce-fotografias/
     }
   ]
 }
-```
-
-## Desarrollo
-
-El servidor utiliza:
-- **Express.js** - Framework web
-- **File System** - Persistencia de datos en JSON
-- **Nodemon** - Reinicio automático durante desarrollo
-
-## Persistencia
-
-Los datos se almacenan en archivos JSON:
-- `data/products.json` - Almacena todos los productos
-- `data/carts.json` - Almacena todos los carritos
-
-Los archivos se crean automáticamente cuando se agregan datos.
-
-## Testing
-
-Puedes probar los endpoints usando:
-- **Postman** - Cliente HTTP con interfaz gráfica
-- **curl** - Cliente HTTP desde terminal
-- **Insomnia** - Cliente HTTP alternativo
-
-## Ejemplos de uso
-
-### Crear un producto
-
-```bash
-curl -X POST http://localhost:8080/api/products \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Atardecer en la Playa",
-    "description": "Fotografía de un hermoso atardecer",
-    "code": "BEACH-001",
-    "price": 149.99,
-    "status": true,
-    "stock": 30,
-    "category": "Playas",
-    "thumbnails": ["https://example.com/sunset.jpg"]
-  }'
-```
-
-### Crear un carrito
-
-```bash
-curl -X POST http://localhost:8080/api/carts
-```
-
-### Agregar producto al carrito
-
-```bash
-curl -X POST http://localhost:8080/api/carts/1/product/1 \
-  -H "Content-Type: application/json" \
-  -d '{"quantity": 2}'
-```
-
-## Contacto
-
-📧 **Email:** awstinjara@gmail.com
-📱 **Teléfono:** +54 9 1140608953
-
-## Categorías de Productos
-
-- 🔹#Lookbooks
-- 🔹#fotoproducto
-- 🔹#eventossociales
 
 ## Autor
 
