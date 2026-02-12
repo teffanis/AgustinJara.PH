@@ -34,34 +34,6 @@ ecommerce-fotografias/
 - `GET /api/carts/:cid` - Obtener productos del carrito
 - `POST /api/carts/:cid/product/:pid` - Agregar producto al carrito
 
-## Formato de Producto
-
-```json
-{
-  "id": 1,
-  "title": "Paisaje Montañoso",
-  "description": "Hermosa fotografía de montañas al atardecer",
-  "code": "MONT-001",
-  "price": 99.99,
-  "status": true,
-  "stock": 50,
-  "category": "Paisajes",
-  "thumbnails": ["https://example.com/image1.jpg"]
-}
-```
-
-## Formato de Carrito
-
-```json
-{
-  "id": 1,
-  "products": [
-    {
-      "product": 1,
-      "quantity": 2
-    }
-  ]
-}
 
 ## Autor
 

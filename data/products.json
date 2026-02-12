@@ -8,7 +8,9 @@
     "status": true,
     "stock": 50,
     "category": "🔹#fotoproducto",
-    "thumbnails": ["https://example.com/product-photo.jpg"]
+    "thumbnails": [
+      "https://example.com/product-photo.jpg"
+    ]
   },
   {
     "id": 2,
@@ -19,7 +21,9 @@
     "status": true,
     "stock": 30,
     "category": "🔹#Lookbooks",
-    "thumbnails": ["https://example.com/lookbook.jpg"]
+    "thumbnails": [
+      "https://example.com/lookbook.jpg"
+    ]
   },
   {
     "id": 3,
@@ -30,6 +34,19 @@
     "status": true,
     "stock": 25,
     "category": "🔹#eventossociales",
-    "thumbnails": ["https://example.com/event-photo.jpg"]
+    "thumbnails": [
+      "https://example.com/event-photo.jpg"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "tumadre",
+    "description": "entang",
+    "code": "3434",
+    "price": 999,
+    "stock": 57,
+    "category": "57",
+    "thumbnails": [],
+    "status": true
   }
 ]
