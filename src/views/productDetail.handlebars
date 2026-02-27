@@ -1,0 +1,331 @@
+<div class="container">
+  <div class="product-detail">
+    <div class="product-image">
+      <img src="{{product.thumbnails.[0]}}" alt="{{product.title}}" onerror="this.src='https://via.placeholder.com/400x300?text=Sin+Imagen'">
+    </div>
+
+    <div class="product-content">
+      <h1>{{product.title}}</h1>
+      
+      <div class="product-meta">
+        <p class="category"><strong>Categoría:</strong> {{product.category}}</p>
+        <p class="code"><strong>Código:</strong> {{product.code}}</p>
+        <p class="status">
+          <strong>Estado:</strong> 
+          {{#if product.status}}
+            <span class="badge badge-success">Disponible</span>
+          {{else}}
+            <span class="badge badge-danger">No disponible</span>
+          {{/if}}
+        </p>
+      </div>
+
+      <p class="description">{{product.description}}</p>
+
+      <div class="product-pricing">
+        <p class="price">${{product.price}}</p>
+        <p class="stock">
+          <strong>Stock disponible:</strong> {{product.stock}}
+          {{#if (gt product.stock 0)}}
+            <span class="stock-available">(En stock)</span>
+          {{else}}
+            <span class="stock-unavailable">(Agotado)</span>
+          {{/if}}
+        </p>
+      </div>
+
+      <div class="product-actions">
+        {{#if (gt product.stock 0)}}
+          <div class="quantity-selector">
+            <label for="quantity">Cantidad:</label>
+            <input type="number" id="quantity" name="quantity" min="1" max="{{product.stock}}" value="1">
+          </div>
+          
+          <button class="btn btn-success btn-lg add-to-cart-btn" data-product-id="{{product._id}}" data-product-title="{{product.title}}">
+            Agregar al carrito
+          </button>
+        {{else}}
+          <button class="btn btn-danger btn-lg" disabled>
+            Producto agotado
+          </button>
+        {{/if}}
+
+        <a href="/products" class="btn btn-secondary btn-lg">
+          Volver al catálogo
+        </a>
+      </div>
+
+      {{#if product.thumbnails}}
+        <div class="product-thumbnails">
+          <p><strong>Más imágenes:</strong></p>
+          <div class="thumbnails-grid">
+            {{#each product.thumbnails}}
+              <img src="{{this}}" alt="Miniatura" class="thumbnail" onerror="this.src='https://via.placeholder.com/100x100?text=Sin+Imagen'">
+            {{/each}}
+          </div>
+        </div>
+      {{/if}}
+
+      <div class="product-dates">
+        <p class="date"><strong>Creado:</strong> {{product.createdAt}}</p>
+        <p class="date"><strong>Actualizado:</strong> {{product.updatedAt}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .product-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .product-image {
+    position: sticky;
+    top: 20px;
+  }
+
+  .product-image img {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+
+  .product-content h1 {
+    margin: 0 0 20px 0;
+    font-size: 2rem;
+    color: #333;
+  }
+
+  .product-meta {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .product-meta p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+  }
+
+  .category {
+    color: #666;
+  }
+
+  .code {
+    color: #999;
+    font-family: monospace;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.85rem;
+  }
+
+  .badge-success {
+    background-color: #28a745;
+  }
+
+  .badge-danger {
+    background-color: #dc3545;
+  }
+
+  .description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    margin: 20px 0;
+  }
+
+  .product-pricing {
+    background: #f9f9f9;
+    padding: 20px;
+    border-left: 4px solid #007bff;
+    margin: 20px 0;
+    border-radius: 4px;
+  }
+
+  .price {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #28a745;
+    margin: 0;
+  }
+
+  .stock {
+    font-size: 1.1rem;
+    margin: 10px 0 0 0;
+  }
+
+  .stock-available {
+    color: #28a745;
+    font-weight: bold;
+  }
+
+  .stock-unavailable {
+    color: #dc3545;
+    font-weight: bold;
+  }
+
+  .product-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 30px 0;
+  }
+
+  .quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .quantity-selector label {
+    font-weight: bold;
+  }
+
+  .quantity-selector input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 80px;
+    font-size: 1rem;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+    display: block;
+    text-align: center;
+    transition: background-color 0.3s;
+  }
+
+  .btn-lg {
+    padding: 15px 24px;
+    font-size: 1.1rem;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .btn-success:hover:not(:disabled) {
+    background-color: #218838;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background-color: #545b62;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .product-thumbnails {
+    margin: 30px 0;
+  }
+
+  .product-thumbnails p {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .thumbnails-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+  }
+
+  .thumbnail {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+
+  .thumbnail:hover {
+    border-color: #007bff;
+  }
+
+  .product-dates {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+  }
+
+  .date {
+    color: #999;
+    font-size: 0.9rem;
+    margin: 5px 0;
+  }
+
+  @media (max-width: 768px) {
+    .product-detail {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .product-image {
+      position: static;
+    }
+
+    .content h1 {
+      font-size: 1.5rem;
+    }
+
+    .price {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<script>
+  document.querySelector('.add-to-cart-btn')?.addEventListener('click', async function() {
+    const quantity = parseInt(document.getElementById('quantity')?.value || 1);
+    const productId = this.getAttribute('data-product-id');
+    const productTitle = this.getAttribute('data-product-title');
+    
+    try {
+      alert(`Agregado: ${quantity} unidad(es) de "${productTitle}" al carrito`);
+      console.log('Agregar al carrito:', { productId, quantity });
+    } catch (error) {
+      alert('Error al agregar al carrito: ' + error.message);
+    }
+  });
+
+  // Permitir hacer zoom en las imágenes pequeñas
+  document.querySelectorAll('.thumbnail').forEach(thumb => {
+    thumb.addEventListener('click', function() {
+      const mainImg = document.querySelector('.product-image img');
+      mainImg.src = this.src;
+    });
+  });
+</script>

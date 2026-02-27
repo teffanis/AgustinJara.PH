@@ -3,6 +3,8 @@ const { engine } = require('express-handlebars');
 const { Server } = require('socket.io');
 const http = require('http');
 const path = require('path');
+const { connectDB } = require('./config/mongodb');
+const handlebarsHelpers = require('./helpers/handlebarsHelpers');
 
 const app = express();
 const server = http.createServer(app);
@@ -13,8 +15,16 @@ const cartsRouter = require('./routes/carts');
 
 const PORT = 8080;
 
-// Configurar Handlebars
-app.engine('handlebars', engine());
+// Conectar a MongoDB
+connectDB().catch(error => {
+  console.error('Error al conectar a MongoDB:', error);
+  process.exit(1);
+});
+
+// Configurar Handlebars con helpers personalizados
+app.engine('handlebars', engine({
+  helpers: handlebarsHelpers
+}));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -41,15 +51,15 @@ app.use('/', viewsRouter);
 
 // Socket.io - Manejo de conexiones
 const ProductManager = require('./managers/ProductManager');
-const productManager = new ProductManager(path.join(__dirname, '../data/products.json'));
+const productManager = new ProductManager();
 
 io.on('connection', async (socket) => {
-  console.log('Cliente conectado:', socket.id);
+  console.log('✓ Cliente conectado:', socket.id);
 
   // Enviar lista de productos actualizada al conectarse
   try {
-    const products = await productManager.getProducts();
-    socket.emit('updateProducts', products);
+    const result = await productManager.getProducts({}, 100, 1, '');
+    socket.emit('updateProducts', result.payload);
   } catch (error) {
     socket.emit('error', { message: error.message });
   }
@@ -58,10 +68,10 @@ io.on('connection', async (socket) => {
   socket.on('addProduct', async (productData) => {
     try {
       const newProduct = await productManager.addProduct(productData);
-      const products = await productManager.getProducts();
+      const result = await productManager.getProducts({}, 100, 1, '');
       
       // Emitir a todos los clientes conectados
-      io.emit('updateProducts', products);
+      io.emit('updateProducts', result.payload);
       socket.emit('success', { message: 'Producto agregado correctamente' });
     } catch (error) {
       socket.emit('error', { message: error.message });
@@ -72,10 +82,10 @@ io.on('connection', async (socket) => {
   socket.on('deleteProduct', async (productId) => {
     try {
       await productManager.deleteProduct(productId);
-      const products = await productManager.getProducts();
+      const result = await productManager.getProducts({}, 100, 1, '');
       
       // Emitir a todos los clientes conectados
-      io.emit('updateProducts', products);
+      io.emit('updateProducts', result.payload);
       socket.emit('success', { message: 'Producto eliminado correctamente' });
     } catch (error) {
       socket.emit('error', { message: error.message });
@@ -83,14 +93,17 @@ io.on('connection', async (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('Cliente desconectado:', socket.id);
+    console.log('✗ Cliente desconectado:', socket.id);
   });
 });
 
 // Iniciar servidor
 server.listen(PORT, () => {
-  console.log(`Servidor escuchando en puerto ${PORT}`);
-  console.log(`http://localhost:${PORT}`);
+  console.log(`\n╔════════════════════════════════════════╗`);
+  console.log(`║  🚀 Servidor ejecutándose en puerto ${PORT}   ║`);
+  console.log(`║  🌐 http://localhost:${PORT}                 ║`);
+  console.log(`║  📦 Base de datos: MongoDB               ║`);
+  console.log(`╚════════════════════════════════════════╝\n`);
 });
 
 module.exports = { app, io };

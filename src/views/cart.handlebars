@@ -1,0 +1,417 @@
+<div class="container">
+  <div class="cart-header">
+    <h1>Carrito de Compras</h1>
+    <p class="cart-id">ID del Carrito: <code>{{cartId}}</code></p>
+  </div>
+
+  {{#if products.length}}
+    <div class="cart-content">
+      <!-- Tabla de productos -->
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio Unitario</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each products}}
+            <tr class="cart-item" data-product-id="{{this.product._id}}">
+              <td class="product-name">
+                <div class="product-info-cell">
+                  <img src="{{this.product.thumbnails.[0]}}" alt="{{this.product.title}}" class="product-thumbnail" onerror="this.src='https://via.placeholder.com/50x50?text=Sin+Imagen'">
+                  <div>
+                    <p class="product-title">{{this.product.title}}</p>
+                    <p class="product-category">{{this.product.category}}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="product-price">${{this.product.price}}</td>
+              <td class="product-quantity">
+                <input type="number" class="quantity-input" value="{{this.quantity}}" min="1" max="{{this.product.stock}}" data-product-id="{{this.product._id}}">
+              </td>
+              <td class="product-subtotal">${{multiply this.product.price this.quantity}}</td>
+              <td class="product-actions">
+                <button class="btn btn-danger btn-sm delete-product-btn" data-product-id="{{this.product._id}}" data-product-title="{{this.product.title}}">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+
+      <!-- Resumen del carrito -->
+      <div class="cart-summary">
+        <div class="summary-item">
+          <span>Subtotal:</span>
+          <span class="summary-value">${{cartSubtotal products}}</span>
+        </div>
+        <div class="summary-item">
+          <span>Impuestos (10%):</span>
+          <span class="summary-value">${{multiply (cartSubtotal products) 0.1}}</span>
+        </div>
+        <div class="summary-item total">
+          <span>Total:</span>
+          <span class="summary-value">${{multiply (cartSubtotal products) 1.1}}</span>
+        </div>
+      </div>
+
+      <!-- Acciones del carrito -->
+      <div class="cart-actions">
+        <button class="btn btn-danger btn-lg clear-cart-btn" data-cart-id="{{cartId}}">
+          Vaciar carrito
+        </button>
+        <a href="/products" class="btn btn-secondary btn-lg">
+          Continuar comprando
+        </a>
+        <button class="btn btn-success btn-lg checkout-btn" disabled>
+          Proceder al pago (próximamente)
+        </button>
+      </div>
+    </div>
+
+    <!-- Información adicional del carrito -->
+    <div class="cart-info">
+      <div class="info-item">
+        <p><strong>Cantidad de productos:</strong> {{products.length}}</p>
+      </div>
+      <div class="info-item">
+        <p><strong>Fecha de creación:</strong> {{cart.createdAt}}</p>
+      </div>
+      <div class="info-item">
+        <p><strong>Última actualización:</strong> {{cart.updatedAt}}</p>
+      </div>
+    </div>
+  {{else}}
+    <div class="empty-cart">
+      <p class="empty-message">Tu carrito está vacío</p>
+      <a href="/products" class="btn btn-primary btn-lg">
+        Ir al catálogo de productos
+      </a>
+    </div>
+  {{/if}}
+</div>
+
+<style>
+  .cart-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+
+  .cart-header h1 {
+    margin: 0 0 10px 0;
+    font-size: 2.5rem;
+  }
+
+  .cart-id {
+    margin: 0;
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+
+  .cart-id code {
+    background: rgba(255,255,255,0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-weight: bold;
+  }
+
+  .cart-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+  }
+
+  .cart-table thead {
+    background: #f5f5f5;
+    border-bottom: 2px solid #ddd;
+  }
+
+  .cart-table th {
+    padding: 12px;
+    text-align: left;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .cart-table td {
+    padding: 15px 12px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .cart-table tbody tr:hover {
+    background: #fafafa;
+  }
+
+  .product-info-cell {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .product-thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .product-title {
+    margin: 0;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .product-category {
+    margin: 3px 0 0 0;
+    font-size: 0.85rem;
+    color: #999;
+  }
+
+  .product-price {
+    font-weight: bold;
+    color: #28a745;
+    white-space: nowrap;
+  }
+
+  .product-quantity input {
+    width: 70px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+
+  .product-subtotal {
+    font-weight: bold;
+    color: #333;
+  }
+
+  .product-actions {
+    text-align: center;
+  }
+
+  .btn-sm {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  .cart-summary {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-bottom: 30px;
+  }
+
+  .summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .summary-item.total {
+    border-bottom: none;
+    border-top: 2px solid #333;
+    margin-top: 10px;
+    padding-top: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .summary-value {
+    font-weight: bold;
+    color: #28a745;
+  }
+
+  .cart-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 30px 0;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+    display: inline-block;
+    text-align: center;
+    transition: background-color 0.3s;
+  }
+
+  .btn-lg {
+    padding: 15px 24px;
+    font-size: 1.1rem;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background-color: #545b62;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .btn-success:hover:not(:disabled) {
+    background-color: #218838;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .btn-danger:hover:not(:disabled) {
+    background-color: #c82333;
+  }
+
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .cart-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+  }
+
+  .info-item {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  .info-item p {
+    margin: 0;
+    color: #666;
+  }
+
+  .empty-cart {
+    text-align: center;
+    padding: 60px 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+  }
+
+  .empty-message {
+    font-size: 1.5rem;
+    color: #999;
+    margin-bottom: 30px;
+  }
+
+  @media (max-width: 768px) {
+    .cart-table {
+      font-size: 0.9rem;
+    }
+
+    .cart-table th,
+    .cart-table td {
+      padding: 10px 5px;
+    }
+
+    .product-info-cell {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .product-thumbnail {
+      width: 40px;
+      height: 40px;
+    }
+
+    .cart-actions {
+      flex-direction: column;
+    }
+
+    .btn {
+      width: 100%;
+    }
+
+    .cart-summary {
+      max-width: 100%;
+    }
+  }
+</style>
+
+<script>
+  // Permitir actualizar cantidades (cuando interactúen con los inputs)
+  document.querySelectorAll('.quantity-input').forEach(input => {
+    input.addEventListener('blur', function() {
+      const productId = this.getAttribute('data-product-id');
+      const quantity = parseInt(this.value);
+      console.log('Actualizar cantidad:', { productId, quantity });
+      // Se llamaría a PUT /api/carts/:cid/products/:pid
+    });
+  });
+
+  // Eliminar productos del carrito
+  document.querySelectorAll('.delete-product-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const productId = this.getAttribute('data-product-id');
+      const productTitle = this.getAttribute('data-product-title');
+      
+      if (confirm(`¿Deseas eliminar "${productTitle}" del carrito?`)) {
+        console.log('Eliminar producto:', productId);
+        // Se llamaría a DELETE /api/carts/:cid/products/:pid
+        // Luego recargar la página o actualizar el DOM
+      }
+    });
+  });
+
+  // Limpiar carrito
+  document.querySelector('.clear-cart-btn')?.addEventListener('click', function() {
+    if (confirm('¿Deseas vaciar completamente el carrito? Esta acción no se puede deshacer.')) {
+      const cartId = this.getAttribute('data-cart-id');
+      console.log('Limpiar carrito:', cartId);
+      // Se llamaría a DELETE /api/carts/:cid
+      // Luego recargar la página o mostrar mensaje
+    }
+  });
+</script>
+
+<!-- Helper personalizado para hacer cálculos en handlebars -->
+<script>
+  // Nota: Los helpers como 'multiply' y 'cartSubtotal' necesitan ser registrados en el servidor
+  // Se mantienen aquí para referencia de cómo se verían en la vista
+</script>

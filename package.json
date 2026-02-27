@@ -16,7 +16,9 @@
   "dependencies": {
     "express": "^4.18.2",
     "express-handlebars": "^8.0.3",
-    "socket.io": "^4.8.3"
+    "socket.io": "^4.8.3",
+    "mongoose": "^7.5.0",
+    "mongoose-paginate-v2": "^1.7.31"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"

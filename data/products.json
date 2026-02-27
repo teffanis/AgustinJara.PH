@@ -37,16 +37,5 @@
     "thumbnails": [
       "https://example.com/event-photo.jpg"
     ]
-  },
-  {
-    "id": 4,
-    "title": "tumadre",
-    "description": "entang",
-    "code": "3434",
-    "price": 999,
-    "stock": 57,
-    "category": "57",
-    "thumbnails": [],
-    "status": true
   }
 ]
