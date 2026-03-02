@@ -1,3 +1,6 @@
+// Cargar variables de entorno antes que todo
+require('dotenv').config();
+
 const express = require('express');
 const { engine } = require('express-handlebars');
 const { Server } = require('socket.io');
