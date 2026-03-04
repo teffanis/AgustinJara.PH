@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 router.get('/products', async (req, res) => {
   try {
     // Extraer parámetros de query
-    const limit = req.query.limit || 10;
+    const limit = req.query.limit || 3;
     const page = req.query.page || 1;
     const query = req.query.query || '';
     const sort = req.query.sort || '';
