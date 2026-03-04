@@ -1,41 +1,122 @@
 [
   {
-    "id": 1,
-    "title": "Colección de Moda",
-    "description": "Hermosas fotografías de productos de moda y accesorios",
-    "code": "PROD-001",
-    "price": 149.99,
+    "title": "Fotografías 10x10",
+    "description": "Hermosas fotografías de tamaño 10x10 cm. Perfectas para álbumes y colecciones personales. Impresión de alta calidad en papel fotográfico premium.",
+    "code": "FOTO-1010",
+    "price": 29.99,
     "status": true,
-    "stock": 50,
-    "category": "🔹#fotoproducto",
+    "stock": 100,
+    "category": "📷 Fotografías",
     "thumbnails": [
-      "https://example.com/product-photo.jpg"
+      "https://images.unsplash.com/photo-1606986628025-35d57e735ae0?w=400"
     ]
   },
   {
-    "id": 2,
-    "title": "Lookbook Primavera",
-    "description": "Colección de fotografías estilo lookbook para catálogos",
-    "code": "LOOK-001",
-    "price": 199.99,
+    "title": "Fotografías 15x18",
+    "description": "Fotografías profesionales de tamaño 15x18 cm. Ideales para marcos y decoración. Acabado mate de primer nivel.",
+    "code": "FOTO-1518",
+    "price": 49.99,
+    "status": true,
+    "stock": 80,
+    "category": "📷 Fotografías",
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1607453893285-f8c5ab9eb3de?w=400"
+    ]
+  },
+  {
+    "title": "Fotografías 35x35",
+    "description": "Fotogramas grandes de 35x35 cm. Perfectas para decoración de salas y espacios principales. Calidad profesional museo.",
+    "code": "FOTO-3535",
+    "price": 89.99,
+    "status": true,
+    "stock": 60,
+    "category": "📷 Fotografías",
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1606986628025-35d57e735ae0?w=400"
+    ]
+  },
+  {
+    "title": "Fotografía con Marco 80x50",
+    "description": "Fotografía de 80x50 cm incluye marco de madera de roble. Listo para colgar. Sistema antirreflejos de cristal UV protector.",
+    "code": "MARCO-8050",
+    "price": 249.99,
     "status": true,
     "stock": 30,
-    "category": "🔹#Lookbooks",
+    "category": "🖼️ Con Marco",
     "thumbnails": [
-      "https://example.com/lookbook.jpg"
+      "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400"
     ]
   },
   {
-    "id": 3,
-    "title": "Cobertura de Eventos",
-    "description": "Fotografías profesionales de eventos sociales y corporativos",
-    "code": "EVENT-001",
-    "price": 179.99,
+    "title": "Fotografía Mural 1x1",
+    "description": "Impresión mural de 1 metro x 1 metro. Ideal para transforma paredes y crea ambientes. Instalación professional incluida.",
+    "code": "MURAL-1x1",
+    "price": 399.99,
     "status": true,
-    "stock": 25,
-    "category": "🔹#eventossociales",
+    "stock": 20,
+    "category": "🎨 Murales",
     "thumbnails": [
-      "https://example.com/event-photo.jpg"
+      "https://images.unsplash.com/photo-1598928506696-c9e1d4f1c5e0?w=400"
+    ]
+  },
+  {
+    "title": "Book de Fotos",
+    "description": "Álbum fotográfico profesional de 30 páginas. Encuadernación premium con tapa dura. Incluye diseño personalizado de portada.",
+    "code": "BOOK-FOTOS",
+    "price": 159.99,
+    "status": true,
+    "stock": 45,
+    "category": "📚 Libros",
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1544716278-ca5e3af4abd8?w=400"
+    ]
+  },
+  {
+    "title": "Libro de Recuerdos",
+    "description": "Libro premium de 50 páginas para guardar tus momentos especiales. Papel grueso, espacio para notas y memento.",
+    "code": "LIBRO-RECUERDOS",
+    "price": 199.99,
+    "status": true,
+    "stock": 35,
+    "category": "📚 Libros",
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1507842217343-583f20270319?w=400"
+    ]
+  },
+  {
+    "title": "Sesión Fotos Models",
+    "description": "Sesión profesional de fotografía para modelos. 2 horas, 50+ fotos retocadas. Incluye portafolio digital y licencia comercial.",
+    "code": "SESION-MODELS",
+    "price": 349.99,
+    "status": true,
+    "stock": 15,
+    "category": "🎬 Sesiones",
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400"
+    ]
+  },
+  {
+    "title": "Evento Completo",
+    "description": "Cobertura fotográfica completa de tu evento. 6 horas de cobertura, fotógrafo profesional, 200+ fotos retocadas entregadas en USB.",
+    "code": "EVENTO-COMPLETO",
+    "price": 599.99,
+    "status": true,
+    "stock": 12,
+    "category": "🎉 Eventos",
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1519167758481-83f19106c03f?w=400"
+    ]
+  },
+  {
+    "title": "Promoción Evento + Book",
+    "description": "PACK ESPECIAL: Cobertura completa de evento (6 horas) + Book de fotos premium de 40 páginas. Ahorra 30% comprando juntos.",
+    "code": "PACK-EVENTO-BOOK",
+    "price": 799.99,
+    "status": true,
+    "stock": 10,
+    "category": "🎁 Promociones",
+    "thumbnails": [
+      "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400"
     ]
   }
 ]
