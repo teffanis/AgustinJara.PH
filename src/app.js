@@ -15,6 +15,7 @@ const io = new Server(server);
 
 const productsRouter = require('./routes/products');
 const cartsRouter = require('./routes/carts');
+const loaderRouter = require('./routes/loader');
 
 const PORT = 8080;
 
@@ -47,6 +48,7 @@ app.use((req, res, next) => {
 // Rutas API
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
+app.use('/api/loader', loaderRouter);
 
 // Rutas de vistas
 const viewsRouter = require('./routes/views');

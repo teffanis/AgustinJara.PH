@@ -36,16 +36,25 @@ router.get('/products', async (req, res) => {
     // Obtener productos
     const result = await productManager.getProducts(filters, limit, page, sort);
 
+    // Construir URLs correctas para vistas (no API)
+    const baseUrl = '/products';
+    const prevLink = result.hasPrevPage
+      ? `${baseUrl}?limit=${limit}&page=${result.prevPage}&query=${query}&sort=${sort}`
+      : null;
+    const nextLink = result.hasNextPage
+      ? `${baseUrl}?limit=${limit}&page=${result.nextPage}&query=${query}&sort=${sort}`
+      : null;
+
     // Renderizar vista con datos de paginación
     res.render('products', {
       title: 'Productos - Ecommerce Fotografías',
       products: result.payload,
       totalPages: result.totalPages,
-      currentPage: result.page,
+      currentPage: parseInt(page),
       hasPrevPage: result.hasPrevPage,
       hasNextPage: result.hasNextPage,
-      prevLink: result.prevLink,
-      nextLink: result.nextLink,
+      prevLink: prevLink,
+      nextLink: nextLink,
       query: query,
       sort: sort
     });
@@ -71,6 +80,22 @@ router.get('/products/:pid', async (req, res) => {
   } catch (error) {
     res.status(404).render('error', {
       title: 'Producto no encontrado',
+      message: error.message
+    });
+  }
+});
+
+/**
+ * GET /carts/new - Crear nuevo carrito o redireccionar al existente
+ */
+router.get('/carts/new', async (req, res) => {
+  try {
+    // Crear un nuevo carrito
+    const newCart = await cartManager.createCart();
+    res.redirect(`/carts/${newCart._id}`);
+  } catch (error) {
+    res.status(500).render('error', {
+      title: 'Error',
       message: error.message
     });
   }

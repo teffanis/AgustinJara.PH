@@ -1,5 +1,8 @@
 <div class="container">
-  <h2>Catálogo de Productos</h2>
+  <div class="header-products">
+    <h2>Catálogo de Productos</h2>
+    <a href="/carts/new" class="btn btn-warning" style="margin-left: auto;">🛒 Mi Carrito</a>
+  </div>
   
   <!-- Barra de búsqueda y filtros -->
   <div class="filters-section">
@@ -91,6 +94,28 @@
 
 <!-- Estilos adicionales -->
 <style>
+  .header-products {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 15px 0;
+    border-bottom: 2px solid #007bff;
+  }
+
+  .header-products h2 {
+    margin: 0;
+  }
+
+  .btn-warning {
+    background-color: #ffc107;
+    color: #000;
+  }
+
+  .btn-warning:hover {
+    background-color: #e0a800;
+  }
+
   .filters-section {
     background: #f5f5f5;
     padding: 20px;
@@ -299,17 +324,56 @@
 
 <!-- Script para agregar al carrito (sin necesidad de nueva página) -->
 <script>
+  // Variable para almacenar el carrito actual
+  let currentCartId = localStorage.getItem('cartId');
+
+  // Función para obtener o crear carrito
+  async function getOrCreateCart() {
+    if (currentCartId) {
+      return currentCartId;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8080/api/carts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await response.json();
+      currentCartId = data.payload._id;
+      localStorage.setItem('cartId', currentCartId);
+      return currentCartId;
+    } catch (error) {
+      alert('Error al crear carrito: ' + error.message);
+      return null;
+    }
+  }
+
+  // Eventos para botones "Agregar al carrito"
   document.querySelectorAll('.add-to-cart').forEach(button => {
-    button.addEventListener('click', async function() {
+    button.addEventListener('click', async function(e) {
+      e.preventDefault();
+      
       const productId = this.getAttribute('data-product-id');
       const productTitle = this.getAttribute('data-product-title');
       
       try {
-        // Aquí más adelante integrarás con el carrito
-        alert(`Producto "${productTitle}" agregado al carrito`);
-        console.log('Agregar al carrito:', productId);
+        const cartId = await getOrCreateCart();
+        if (!cartId) return;
+
+        const response = await fetch(`http://localhost:8080/api/carts/${cartId}/product/${productId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ quantity: 1 })
+        });
+
+        if (response.ok) {
+          alert(`✅ "${productTitle}" agregado al carrito`);
+          // Aquí podrías actualizar el contador del carrito
+        } else {
+          alert('Error al agregar al carrito');
+        }
       } catch (error) {
-        alert('Error al agregar al carrito: ' + error.message);
+        alert('Error: ' + error.message);
       }
     });
   });
