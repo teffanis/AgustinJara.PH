@@ -17,7 +17,7 @@ const productsRouter = require('./routes/products');
 const cartsRouter = require('./routes/carts');
 const loaderRouter = require('./routes/loader');
 
-const PORT = 8080;
+const PORT = process.env.PORT || 3000;
 
 // Conectar a MongoDB
 connectDB().catch(error => {
