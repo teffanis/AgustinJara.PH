@@ -375,37 +375,84 @@
 </style>
 
 <script>
+  const cartId = '{{cartId}}';
+
   // Permitir actualizar cantidades (cuando interactúen con los inputs)
   document.querySelectorAll('.quantity-input').forEach(input => {
-    input.addEventListener('blur', function() {
+    input.addEventListener('blur', async function() {
       const productId = this.getAttribute('data-product-id');
       const quantity = parseInt(this.value);
-      console.log('Actualizar cantidad:', { productId, quantity });
-      // Se llamaría a PUT /api/carts/:cid/products/:pid
+      
+      if (quantity < 1) {
+        alert('La cantidad debe ser mayor a 0');
+        location.reload();
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:5000/api/carts/${cartId}/products/${productId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ quantity: quantity })
+        });
+
+        if (response.ok) {
+          alert('Cantidad actualizada correctamente');
+          location.reload();
+        } else {
+          const error = await response.json();
+          alert('Error: ' + error.message);
+        }
+      } catch (error) {
+        alert('Error al actualizar cantidad: ' + error.message);
+      }
     });
   });
 
   // Eliminar productos del carrito
   document.querySelectorAll('.delete-product-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', async function() {
       const productId = this.getAttribute('data-product-id');
       const productTitle = this.getAttribute('data-product-title');
       
       if (confirm(`¿Deseas eliminar "${productTitle}" del carrito?`)) {
-        console.log('Eliminar producto:', productId);
-        // Se llamaría a DELETE /api/carts/:cid/products/:pid
-        // Luego recargar la página o actualizar el DOM
+        try {
+          const response = await fetch(`http://localhost:5000/api/carts/${cartId}/products/${productId}`, {
+            method: 'DELETE'
+          });
+
+          if (response.ok) {
+            alert('Producto eliminado del carrito');
+            location.reload();
+          } else {
+            const error = await response.json();
+            alert('Error: ' + error.message);
+          }
+        } catch (error) {
+          alert('Error al eliminar producto: ' + error.message);
+        }
       }
     });
   });
 
   // Limpiar carrito
-  document.querySelector('.clear-cart-btn')?.addEventListener('click', function() {
+  document.querySelector('.clear-cart-btn')?.addEventListener('click', async function() {
     if (confirm('¿Deseas vaciar completamente el carrito? Esta acción no se puede deshacer.')) {
-      const cartId = this.getAttribute('data-cart-id');
-      console.log('Limpiar carrito:', cartId);
-      // Se llamaría a DELETE /api/carts/:cid
-      // Luego recargar la página o mostrar mensaje
+      try {
+        const response = await fetch(`http://localhost:5000/api/carts/${cartId}`, {
+          method: 'DELETE'
+        });
+
+        if (response.ok) {
+          alert('Carrito vaciado correctamente');
+          location.reload();
+        } else {
+          const error = await response.json();
+          alert('Error: ' + error.message);
+        }
+      } catch (error) {
+        alert('Error al limpiar carrito: ' + error.message);
+      }
     }
   });
 </script>

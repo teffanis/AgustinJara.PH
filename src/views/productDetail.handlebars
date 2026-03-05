@@ -308,14 +308,51 @@
 </style>
 
 <script>
+  // Variable para almacenar el carrito actual
+  let currentCartId = localStorage.getItem('cartId');
+
+  // Función para obtener o crear carrito
+  async function getOrCreateCart() {
+    if (currentCartId) {
+      return currentCartId;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/carts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await response.json();
+      currentCartId = data.payload._id;
+      localStorage.setItem('cartId', currentCartId);
+      return currentCartId;
+    } catch (error) {
+      alert('Error al crear carrito: ' + error.message);
+      return null;
+    }
+  }
+
   document.querySelector('.add-to-cart-btn')?.addEventListener('click', async function() {
     const quantity = parseInt(document.getElementById('quantity')?.value || 1);
     const productId = this.getAttribute('data-product-id');
     const productTitle = this.getAttribute('data-product-title');
     
     try {
-      alert(`Agregado: ${quantity} unidad(es) de "${productTitle}" al carrito`);
-      console.log('Agregar al carrito:', { productId, quantity });
+      const cartId = await getOrCreateCart();
+      if (!cartId) return;
+
+      const response = await fetch(`http://localhost:5000/api/carts/${cartId}/product/${productId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quantity: quantity })
+      });
+
+      if (response.ok) {
+        alert(`✅ ${quantity} unidad(es) de "${productTitle}" agregadas al carrito`);
+      } else {
+        const error = await response.json();
+        alert('Error: ' + error.message);
+      }
     } catch (error) {
       alert('Error al agregar al carrito: ' + error.message);
     }

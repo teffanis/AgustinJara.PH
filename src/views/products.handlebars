@@ -334,7 +334,7 @@
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/carts', {
+      const response = await fetch('http://localhost:5000/api/carts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -360,7 +360,7 @@
         const cartId = await getOrCreateCart();
         if (!cartId) return;
 
-        const response = await fetch(`http://localhost:8080/api/carts/${cartId}/product/${productId}`, {
+        const response = await fetch(`http://localhost:5000/api/carts/${cartId}/product/${productId}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ quantity: 1 })
